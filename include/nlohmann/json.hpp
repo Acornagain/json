@@ -1647,7 +1647,7 @@ class basic_json
                 if (JSON_UNLIKELY(not first.m_it.primitive_iterator.is_begin()
                                   or not last.m_it.primitive_iterator.is_end()))
                 {
-                    JSON_THROW(invalid_iterator::create(204, "iterators out of range"));
+                    JSON_THROW(invalid_iterator::create(204, "iterators out of range"));//？？？
                 }
                 break;
             }
@@ -1655,7 +1655,7 @@ class basic_json
             default:
                 break;
         }
-
+        //？？？
         switch (m_type)
         {
             case value_t::number_integer:
@@ -2458,7 +2458,7 @@ class basic_json
     static ReferenceType get_ref_impl(ThisType& obj)
     {
         // delegate the call to get_ptr<>()
-        auto ptr = obj.template get_ptr<typename std::add_pointer<ReferenceType>::type>();
+        auto ptr = obj.template get_ptr<typename std::add_pointer<ReferenceType>::type>();//???
 
         if (JSON_LIKELY(ptr != nullptr))
         {
@@ -2513,6 +2513,10 @@ class basic_json
     template<typename BasicJsonType, detail::enable_if_t<
                  not std::is_same<BasicJsonType, basic_json>::value and
                  detail::is_basic_json<BasicJsonType>::value, int> = 0>
+                     //which means when BasicJsonType is different from basic_json and 
+                    //the type of BasicJ-son is basic_json(probably meaning BasicJsonType is
+                    //derived from basic_json), then Typedef type = int. 
+                   //But does it make a difference? 
     BasicJsonType get() const
     {
         return *this;
